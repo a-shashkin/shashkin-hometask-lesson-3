@@ -23,19 +23,6 @@ public class Main {
                 6470
         );
 
-        Bismarck.showNameTypeClassAndCountry();
-        Enterprise.showNameTypeClassAndCountry();
-        Bismarck.artilleryAttack(Enterprise);
-        Enterprise.planeAttack(Bismarck);
-        Bismarck.artilleryAttack(Enterprise);
-        Enterprise.planeAttack(Bismarck);
-        Bismarck.artilleryAttack(Enterprise);
-        Enterprise.planeAttack(Bismarck);
-        Bismarck.artilleryAttack(Enterprise);
-        Enterprise.planeAttack(Bismarck);
-        Bismarck.artilleryAttack(Enterprise);
-        Enterprise.planeAttack(Bismarck);
-
         ArtilleryWarship Sovetsky_Soyuz = new ArtilleryWarship(
                 "Sovetsky Soyuz",
                 "Sovetsky Soyuz-class",
@@ -56,10 +43,57 @@ public class Main {
                 5340
         );
 
+        ArtilleryWarship Richelieu = new ArtilleryWarship(
+                "Richelieu",
+                "Richelieu-class",
+                "France",
+                54500,
+                true,
+                "380mm/45 Mle 1935",
+                11900
+        );
+
+        AircraftCarrier Hakuryuu = new AircraftCarrier(
+                "Hakuryuu",
+                "Taihou Kai-class",
+                "Japan",
+                63100,
+                false,
+                "J5N Tenrai Type 91",
+                9340
+        );
+
+        Bismarck.showShipAndArmament();
+        Enterprise.showShipAndArmament();
+        Sovetsky_Soyuz.showShipAndArmament();
+        Graf_Zeppelin.showShipAndArmament();
+        Richelieu.showShipAndArmament();
+        Hakuryuu.showShipAndArmament();
+
+        System.out.println();
+
         fightUntilOneOfShipsSinks(Sovetsky_Soyuz, Graf_Zeppelin);
+
+        System.out.println();
+
+        Warship[] redFleet = new Warship[3];
+        redFleet[0] = Enterprise;
+        redFleet[1] = Sovetsky_Soyuz;
+        redFleet[2] = Richelieu;
+        Warship[] blackFleet = new Warship[3];
+        blackFleet[0] = Bismarck;
+        blackFleet[1] = Graf_Zeppelin;
+        blackFleet[2] = Hakuryuu;
+
+        fleetBattle(redFleet, blackFleet);
+
+        System.out.println();
+        System.out.println("End");
     }
 
     public static void fightUntilOneOfShipsSinks(Warship warship1, Warship warship2) {
+        warship1.resurrectShip();
+        warship2.resurrectShip();
         System.out.println("The battle between " + warship1.name + " from " + warship1.country + " and " + warship2.name + " from " + warship2.country + " is about to start!");
         while (warship1.isSunk == false && warship2.isSunk == false) {
             if (warship1 instanceof ArtilleryWarship) {
@@ -80,6 +114,61 @@ public class Main {
                 }
                 break;
             }
+        }
+    }
+
+    public static boolean isFleetSunk(Warship[] fleet) {
+        for (int i = 0; i < fleet.length; i++) {
+            if (fleet[i].isSunk == false) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static void fleetBattle(Warship[] fleet1, Warship[] fleet2) {
+        for (int i = 0; i < fleet1.length; i++) {
+            fleet1[i].resurrectShip();
+        }
+        for (int i = 0; i < fleet1.length; i++) {
+            fleet2[i].resurrectShip();
+        }
+        System.out.println("Two fleets meet each other in battle!");
+        System.out.println("Fleet 1 consists of:");
+        for (int i = 0; i < fleet1.length; i++) {
+            System.out.println(fleet1[i].name);
+        }
+        System.out.println();
+        System.out.println("Fleet 2 consists of:");
+        for (int i = 0; i < fleet2.length; i++) {
+            System.out.println(fleet2[i].name);
+        }
+        System.out.println();
+        System.out.println("Let's begin the battle!");
+        do {
+            for (int i = 0; i < fleet1.length; i++) {
+                for (int j = 0; j < fleet2.length; j++) {
+                    if (fleet1[i] instanceof ArtilleryWarship) {
+                        ((ArtilleryWarship) fleet1[i]).artilleryAttack(fleet2[j]);
+                    } else if (fleet1[i] instanceof AircraftCarrier) {
+                        ((AircraftCarrier) fleet1[i]).planeAttack(fleet2[j]);
+                    }
+                }
+            }
+            for (int i = 0; i < fleet2.length; i++) {
+                for (int j = 0; j < fleet1.length; j++) {
+                    if (fleet2[i] instanceof ArtilleryWarship) {
+                        ((ArtilleryWarship) fleet2[i]).artilleryAttack(fleet1[j]);
+                    } else if (fleet1[i] instanceof AircraftCarrier) {
+                        ((AircraftCarrier) fleet2[i]).planeAttack(fleet1[j]);
+                    }
+                }
+            }
+        } while (isFleetSunk(fleet1) == false && isFleetSunk(fleet2) == false);
+        if (isFleetSunk(fleet1)) {
+            System.out.println("Fleet 1 has been sunk! Fleet 2 wins the battle!");
+        } else if (isFleetSunk(fleet2)) {
+            System.out.println("Fleet 2 has been sunk! Fleet 1 wins the battle!");
         }
     }
 }

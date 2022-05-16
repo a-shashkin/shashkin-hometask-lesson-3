@@ -42,12 +42,10 @@ public class Warship {
         }
     }
 
-    boolean checkIfShipIsSunkAfterFire() {
-        if (isSunk == true) {
-            System.out.println("Ship " + name + " has been sunk! It cannot act anymore.");
+    boolean checkIfEnemyShipIsSunk(Warship warship) {
+        if (warship.isSunk == true) {
             return true;
         } else {
-            System.out.println("Ship " + name + " is still afloat! It still can do something.");
             return false;
         }
     }
@@ -65,5 +63,10 @@ public class Warship {
         if (shipExistedInRealLife == false) {
             System.out.println("Ship " + name + "never existed in real life. But fine, let's dream a little...");
         }
+    }
+
+    void resurrectShip() {
+        healthPoints = maxHealthPoints;
+        isSunk = false;
     }
 }

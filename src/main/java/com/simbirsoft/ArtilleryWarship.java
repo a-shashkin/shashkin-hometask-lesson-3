@@ -23,10 +23,19 @@ public class ArtilleryWarship extends Warship {
         if (checkIfShipIsSunk()) {
             return;
         }
+        if (checkIfEnemyShipIsSunk(warship)) {
+            return;
+        }
         System.out.println("Ship " + name + " attacks " + warship.name + " with artillery and deals " + armamentDamage + " damage!");
         warship.healthPoints = warship.healthPoints - armamentDamage;
         System.out.println("Ship " + warship.name + " has " + warship.healthPoints + " HP left.");
         warship.checkIfShipWasDestroyed();
+    }
+
+    void showShipAndArmament() {
+        showNameTypeClassAndCountry();
+        System.out.println("Ship is armed with " + armament);
+        System.out.println();
     }
 
 
