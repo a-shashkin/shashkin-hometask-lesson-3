@@ -70,6 +70,13 @@ public class Main {
         Richelieu.showShipAndArmament();
         Hakuryuu.showShipAndArmament();
 
+        Bismarck.checkIfShipExistedInRealLife();
+        Enterprise.checkIfShipExistedInRealLife();
+        Sovetsky_Soyuz.checkIfShipExistedInRealLife();
+        Graf_Zeppelin.checkIfShipExistedInRealLife();
+        Richelieu.checkIfShipExistedInRealLife();
+        Hakuryuu.checkIfShipExistedInRealLife();
+
         System.out.println();
 
         fightUntilOneOfShipsSinks(Sovetsky_Soyuz, Graf_Zeppelin);
