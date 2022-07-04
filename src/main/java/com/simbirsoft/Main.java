@@ -63,6 +63,17 @@ public class Main {
                 9340
         );
 
+        TorpedoWarship Shimakaze = new TorpedoWarship(
+                "Shimakaze",
+                "Shimakaze-class",
+                "Japan",
+                17900,
+                true,
+                "Type 93 torpedo",
+                4190,
+                5
+        );
+
         Bismarck.showShipAndArmament();
         Enterprise.showShipAndArmament();
         Sovetsky_Soyuz.showShipAndArmament();
@@ -95,6 +106,10 @@ public class Main {
         fleetBattle(redFleet, blackFleet);
 
         System.out.println();
+
+        fightUntilOneOfShipsSinks(Enterprise, Shimakaze);
+
+        System.out.println();
         System.out.println("End");
     }
 
@@ -107,11 +122,15 @@ public class Main {
                 ((ArtilleryWarship) warship1).artilleryAttack(warship2);
             } else if (warship1 instanceof AircraftCarrier) {
                 ((AircraftCarrier) warship1).planeAttack(warship2);
+            } else if (warship1 instanceof TorpedoWarship) {
+                ((TorpedoWarship) warship1).torpedoAttack(warship2);
             }
             if (warship2 instanceof ArtilleryWarship) {
                 ((ArtilleryWarship) warship2).artilleryAttack(warship1);
             } else if (warship2 instanceof AircraftCarrier) {
                 ((AircraftCarrier) warship2).planeAttack(warship1);
+            } else if (warship2 instanceof TorpedoWarship) {
+                ((TorpedoWarship) warship2).torpedoAttack(warship1);
             }
             if (warship1.isSunk == true || warship2.isSunk == true) {
                 if (warship1.isSunk == true) {
@@ -159,6 +178,8 @@ public class Main {
                         ((ArtilleryWarship) fleet1[i]).artilleryAttack(fleet2[j]);
                     } else if (fleet1[i] instanceof AircraftCarrier) {
                         ((AircraftCarrier) fleet1[i]).planeAttack(fleet2[j]);
+                    } else if (fleet1[i] instanceof TorpedoWarship) {
+                        ((TorpedoWarship) fleet1[i]).torpedoAttack(fleet2[j]);
                     }
                 }
             }
@@ -166,8 +187,10 @@ public class Main {
                 for (int j = 0; j < fleet1.length; j++) {
                     if (fleet2[i] instanceof ArtilleryWarship) {
                         ((ArtilleryWarship) fleet2[i]).artilleryAttack(fleet1[j]);
-                    } else if (fleet1[i] instanceof AircraftCarrier) {
+                    } else if (fleet2[i] instanceof AircraftCarrier) {
                         ((AircraftCarrier) fleet2[i]).planeAttack(fleet1[j]);
+                    } else if (fleet2[i] instanceof TorpedoWarship) {
+                        ((TorpedoWarship) fleet2[i]).torpedoAttack(fleet1[j]);
                     }
                 }
             }

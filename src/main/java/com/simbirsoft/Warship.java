@@ -61,7 +61,7 @@ public class Warship {
 
     void checkIfShipExistedInRealLife() {
         if (shipExistedInRealLife == false) {
-            System.out.println("Ship " + name + "never existed in real life. But fine, let's dream a little...");
+            System.out.println("Ship " + name + " never existed in real life. But fine, let's dream a little...");
         }
     }
 
